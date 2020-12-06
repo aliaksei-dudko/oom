@@ -6,16 +6,15 @@ public class Main {
 
 	public static void main(String[] args) throws InterruptedException {
 		Context context = Context.newBuilder("js").build();
-		Thread.sleep(20000);
 		try  {
 			final Source source = Source.newBuilder("js", getFunction(), "function").cached(false).build();
-			Value futureResult = context.eval(source);
+			Value result = context.eval(source);
 		} catch (Throwable e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		} finally {
 			context.close(true);
-//			Thread.sleep(100000);
 		}
+		Thread.sleep(100000);
 	}
 
 	private static String getFunction() {
@@ -27,10 +26,7 @@ public class Main {
 				+ "    console.log(\"Start\");\n" + "\n" + "    let allocationStep = 1024 * 1024 * 5;\n" + "\n" + "    while (true) {\n"
 				+ "        // Allocate memory.\n" + "        const allocation = alloc(allocationStep);\n" + "\n"
 				+ "        // Allocate and keep a reference so the allocated memory isn't garbage collected.\n"
-				+ "        allocations.push(allocation);\n" + "\n" + "    }\n" + "}\n" + "\n" + "allocToMax();";
+				+ "        allocations.push(allocation);\n" + "        console.log(\"Size of array:\" + allocations.length);\n" + "\n" + "    }\n"
+				+ "}\n" + " allocToMax();";
 	}
-
-//	private static String getFunction() {
-//		return "eee.fff";
-//	}
 }
